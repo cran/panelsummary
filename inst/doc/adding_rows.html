@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Adding Rows to a panelsummary Table</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Adding Rows to a panelsummary Table</h1>
+
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $(".lightable-classic").removeClass("table").css("display", "table");
+});
+</script>
+<p>This vignette shows how to add rows to <code>panelsummary</code>
+tables. Since <code>panelsummary::panelsummary</code> returns
+<code>kableExtra</code> objects, adding rows is impossible using the
+base function <code>panelsummary::panelsummary</code>. This can be a
+nuisance when you want to include additional statistics to your table.
+However, the workaround is to use the
+<code>panelsummary::panelsummary_raw</code> function.</p>
+<div id="panelsummarypanelsummary_raw" class="section level2">
+<h2>panelsummary::panelsummary_raw</h2>
+<p>The <code>panelsummary::panelsummary_raw</code> function returns a
+dataframe that can be manipulated. The trade-off is that the table will
+need to be customized using the <code>kableExtra</code> package,
+although some of this customization can be completed using the
+<code>panelsummary::clean_raw</code> function (see example).</p>
+</div>
+<div id="workflow" class="section level2">
+<h2>Workflow</h2>
+<p>If you want to create a table with panels that has additional
+statistical rows, the workflow will be the following:</p>
+<ul>
+<li>Estimate your models (preferably with the <code>fixest</code>
+package).</li>
+<li>Pass your models into <code>panelsummary::panelsummary_raw</code> to
+get a manipulable dataframe.</li>
+<li>Manipulate the dataframe (preferably with
+<code>dplyr::add_row</code>).</li>
+<li>Use <code>panelsummary::clean_raw</code> to return a
+<code>kableExtra</code> object.</li>
+<li>Use <code>kableExtra::pack_rows</code> to create panel labels.</li>
+</ul>
+</div>
+<div id="example-adding-additional-rows-to-each-panel" class="section level2">
+<h2>Example: Adding Additional Rows to Each Panel</h2>
+<p>To demonstrate how to add a row to each panel of a
+<code>panelsummary::panelsummary_raw</code> table, I will assume that
+each panel needs one additional row for the wild-cluster-bootstrap
+p-values of the <code>cyl</code> column from the <code>mtcars</code>
+data. While I will not explicitly calculate these (in fact, they will be
+completely made up), the following steps will show how to complete such
+task.</p>
+<p>Consider the following models, estimated using the
+<code>fixest</code> package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Panel A: mpg dependent variable</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span>cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Panel B: wt dependent variable</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>wt_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>wt_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<p>Recall that putting each of these two models in a list will result in
+multiple specifications per-panel.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## putting each panel&#39;s models into a list—one for each panel</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>panel_a_mpg <span class="ot">&lt;-</span> <span class="fu">list</span>(mpg_1, mpg_2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>panel_b_wt <span class="ot">&lt;-</span> <span class="fu">list</span>(wt_1, wt_2)</span></code></pre></div>
+<p>Now, I will pass these two lists into
+<code>panelsummary::panelsummary_raw</code>. Note that this function
+shares many of the same arguments as
+<code>panelsummary::panelsummary</code>. In the following, I will also
+use the arguments <code>stars</code> (significance stars),
+<code>mean_dependent</code> (for dependent variable mean), and
+<code>gof_omit</code> (to omit <span class="math inline">\(R^2\)</span>
+statistics):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating the dataframe</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;^R&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          term   Model 1   Model 2</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                 (Intercept) 34.661*** 34.522***</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                               (2.547)   (2.603)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                         cyl  -1.587** -2.501***</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                               (0.712)   (0.361)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                        disp   -0.021*          </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                               (0.010)          </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                          am              2.567*</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                         (1.291)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  Mean of Dependent Variable    20.091    20.091</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10                   Num.Obs.        32        32</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                        AIC     165.1     165.2</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                        BIC     169.5     169.6</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                 Std.Errors       IID       IID</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                (Intercept)  1.773***  1.566***</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                              (0.386)   (0.453)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                        cyl    -0.054  0.317***</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                              (0.108)   (0.063)</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                       disp  0.008***          </span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                              (0.002)          </span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20                         am           -0.765***</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21                                        (0.225)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 Mean of Dependent Variable     3.217     3.217</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23                   Num.Obs.        32        32</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24                        AIC      44.4      53.3</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25                        BIC      48.8      57.7</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26                 Std.Errors       IID       IID</span></span></code></pre></div>
+<p>The return value of this output is a dataframe without panel labels.
+Given that it is a dataframe, you can use <code>dplyr</code> functions
+to easily manipulate. For instance, I will use the
+<code>dplyr::add_rows</code> function to add the pseudo
+wild-cluster-bootstrap p-values to the table:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## adding rows using dplyr::add_row</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="ot">&lt;-</span> <span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;R&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.002&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">.before =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.005&quot;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">.before =</span> <span class="dv">22</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>bootstrap_table</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                               term   Model 1   Model 2</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                      (Intercept) 34.661*** 34.522***</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                    (2.547)   (2.603)</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                              cyl  -1.587** -2.501***</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                                    (0.712)   (0.361)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                             disp   -0.021*          </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                                    (0.010)          </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                               am              2.567*</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                              (1.291)</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9       Mean of Dependent Variable    20.091    20.091</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Wild Cluster Boot P-value (cyl)      .001      .002</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                        Num.Obs.        32        32</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                             AIC     165.1     165.2</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                             BIC     169.5     169.6</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                      Std.Errors       IID       IID</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                     (Intercept)  1.773***  1.566***</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                                   (0.386)   (0.453)</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                             cyl    -0.054  0.317***</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                                   (0.108)   (0.063)</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                            disp  0.008***          </span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20                                   (0.002)          </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21                              am           -0.765***</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 Wild Cluster Boot P-value (cyl)      .001      .005</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23                                             (0.225)</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24      Mean of Dependent Variable     3.217     3.217</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25                        Num.Obs.        32        32</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26                             AIC      44.4      53.3</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27                             BIC      48.8      57.7</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28                      Std.Errors       IID       IID</span></span></code></pre></div>
+<p>Now the dataframe is ready to be passed into
+<code>kableExtra::kbl</code> to further customize it with panel
+headers/column names etc. Alternatively, you can use the
+<code>panelsummary::clean_raw</code> function to get a few desirable
+traits and speed up the process. In particular, the
+<code>panelsummary::clean_raw</code> function does the following by
+default:</p>
+<ul>
+<li>Passes the dataframe into <code>kableExtra::kbl</code></li>
+<li>Changes the alignment to Left for the first column, and Center for
+all remaining columns.</li>
+<li>Changes the names of the columns to a blank white space for the
+first column, and consecutive numbers in the remaining columns.</li>
+</ul>
+<p>However, you can also pass in a caption using the
+<code>caption</code> argument:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating a kableExtra object with a few desirable defaults</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>
+A customized panelsummary table with added rows.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+34.661***
+</td>
+<td style="text-align:center;">
+34.522***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(2.547)
+</td>
+<td style="text-align:center;">
+(2.603)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cyl
+</td>
+<td style="text-align:center;">
+-1.587**
+</td>
+<td style="text-align:center;">
+-2.501***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.712)
+</td>
+<td style="text-align:center;">
+(0.361)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+disp
+</td>
+<td style="text-align:center;">
+-0.021*
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.010)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.567*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.291)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wild Cluster Boot P-value (cyl)
+</td>
+<td style="text-align:center;">
+.001
+</td>
+<td style="text-align:center;">
+.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AIC
+</td>
+<td style="text-align:center;">
+165.1
+</td>
+<td style="text-align:center;">
+165.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BIC
+</td>
+<td style="text-align:center;">
+169.5
+</td>
+<td style="text-align:center;">
+169.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Std.Errors
+</td>
+<td style="text-align:center;">
+IID
+</td>
+<td style="text-align:center;">
+IID
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+1.773***
+</td>
+<td style="text-align:center;">
+1.566***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.386)
+</td>
+<td style="text-align:center;">
+(0.453)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cyl
+</td>
+<td style="text-align:center;">
+-0.054
+</td>
+<td style="text-align:center;">
+0.317***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.108)
+</td>
+<td style="text-align:center;">
+(0.063)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+disp
+</td>
+<td style="text-align:center;">
+0.008***
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.002)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.765***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wild Cluster Boot P-value (cyl)
+</td>
+<td style="text-align:center;">
+.001
+</td>
+<td style="text-align:center;">
+.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.225)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+3.217
+</td>
+<td style="text-align:center;">
+3.217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AIC
+</td>
+<td style="text-align:center;">
+44.4
+</td>
+<td style="text-align:center;">
+53.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BIC
+</td>
+<td style="text-align:center;">
+48.8
+</td>
+<td style="text-align:center;">
+57.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Std.Errors
+</td>
+<td style="text-align:center;">
+IID
+</td>
+<td style="text-align:center;">
+IID
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol>
+<p>Finally, to get the desired panel labels, you will need to use
+<code>kableExtra::pack_rows</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating the final panels.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="dv">1</span>, <span class="dv">14</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel B: Cyl&quot;</span>, <span class="dv">15</span>, <span class="dv">28</span>, </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<table style="NAborder-bottom: 0; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;" class=" lightable-classic">
+<caption>
+A customized panelsummary table with added rows.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="14">
+<td colspan="3" style="border-bottom: 1px solid;">
+<em>Panel A: MPG</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+(Intercept)
+</td>
+<td style="text-align:center;">
+34.661***
+</td>
+<td style="text-align:center;">
+34.522***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(2.547)
+</td>
+<td style="text-align:center;">
+(2.603)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-1.587**
+</td>
+<td style="text-align:center;">
+-2.501***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.712)
+</td>
+<td style="text-align:center;">
+(0.361)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+disp
+</td>
+<td style="text-align:center;">
+-0.021*
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.010)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.567*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.291)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Wild Cluster Boot P-value (cyl)
+</td>
+<td style="text-align:center;">
+.001
+</td>
+<td style="text-align:center;">
+.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+165.1
+</td>
+<td style="text-align:center;">
+165.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+169.5
+</td>
+<td style="text-align:center;">
+169.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Std.Errors
+</td>
+<td style="text-align:center;">
+IID
+</td>
+<td style="text-align:center;">
+IID
+</td>
+</tr>
+<tr grouplength="14">
+<td colspan="3" style="border-bottom: 1px solid;">
+<em>Panel B: Cyl</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+(Intercept)
+</td>
+<td style="text-align:center;">
+1.773***
+</td>
+<td style="text-align:center;">
+1.566***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.386)
+</td>
+<td style="text-align:center;">
+(0.453)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-0.054
+</td>
+<td style="text-align:center;">
+0.317***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.108)
+</td>
+<td style="text-align:center;">
+(0.063)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+disp
+</td>
+<td style="text-align:center;">
+0.008***
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.002)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.765***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Wild Cluster Boot P-value (cyl)
+</td>
+<td style="text-align:center;">
+.001
+</td>
+<td style="text-align:center;">
+.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.225)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+3.217
+</td>
+<td style="text-align:center;">
+3.217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+44.4
+</td>
+<td style="text-align:center;">
+53.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+48.8
+</td>
+<td style="text-align:center;">
+57.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Std.Errors
+</td>
+<td style="text-align:center;">
+IID
+</td>
+<td style="text-align:center;">
+IID
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ol></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

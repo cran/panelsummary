@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Using panelsummary with fixest</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using panelsummary with fixest</h1>
+
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $(".lightable-classic").removeClass("table").css("display", "table");
+});
+</script>
+<p>This vignette focuses on using the <code>panelsummary</code> package
+with the <code>fixest</code> package. <code>fixest</code> has become one
+of the most popular regression packages for economists, and therefore
+further capabilities have been implemented in <code>panelsummary</code>
+to work seamlessly with <code>fixest</code>. There will be two main
+capabilities that this vignette covers:</p>
+<ol style="list-style-type: decimal">
+<li>Adding the mean of the dependent variable.</li>
+<li>Collapsing fixed effects.</li>
+</ol>
+<div id="adding-the-mean-of-the-dependent-variable" class="section level2">
+<h2>Adding the Mean of the Dependent Variable</h2>
+<p>To start, load in the <code>fixest</code>, <code>panelsummary</code>,
+and <code>kableExtra</code> packages.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest) <span class="do">## for regressions</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra) <span class="do">## for further table customization</span></span></code></pre></div>
+<p>For demonstration purposes, four regressions are estimated with the
+<code>fixest</code> package using the <code>feols</code> function and
+the <code>mtcars</code> data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## estimating two models for mpg</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">feols</span>(mpg <span class="sc">~</span>  cyl <span class="sc">|</span> gear <span class="sc">+</span> carb, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">feols</span>(mpg <span class="sc">~</span>  cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## estimating the same two models for disp</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>disp_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span></code></pre></div>
+<p>To create a regression table with two panels (Panel A: MPG/Panel B:
+Displacement) and two models in each, the lists
+<code>list(mpg_1, mpg_2)</code> and <code>list(disp_1, disp_2)</code>
+can be passed into the arguments for <code>...</code>. However, since
+each of these models is of the class <code>fixest</code> (i.e., created
+with the <code>fixest</code> package), the <code>mean_dependent</code>
+argument can be set to <code>TRUE</code> to show the means of the
+dependent variable in each column:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2), <span class="fu">list</span>(disp_1, disp_2), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean_dependent =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;Automated Mean of Dependent Variable&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Automated Mean of Dependent Variable
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="15">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-0.907
+</td>
+<td style="text-align:center;">
+-1.093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.789)
+</td>
+<td style="text-align:center;">
+(0.801)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+<td style="text-align:center;">
+0.835
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.755
+</td>
+<td style="text-align:center;">
+0.768
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Within
+</td>
+<td style="text-align:center;">
+0.058
+</td>
+<td style="text-align:center;">
+0.088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Within Adj.
+</td>
+<td style="text-align:center;">
+0.017
+</td>
+<td style="text-align:center;">
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+168.3
+</td>
+<td style="text-align:center;">
+167.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+181.4
+</td>
+<td style="text-align:center;">
+181.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+2.53
+</td>
+<td style="text-align:center;">
+2.41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Std.Errors
+</td>
+<td style="text-align:center;">
+by: hp
+</td>
+<td style="text-align:center;">
+by: hp
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: gear
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: carb
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr grouplength="15">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+43.306
+</td>
+<td style="text-align:center;">
+43.905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(13.075)
+</td>
+<td style="text-align:center;">
+(13.489)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.909
+</td>
+<td style="text-align:center;">
+0.910
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.878
+</td>
+<td style="text-align:center;">
+0.873
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Within
+</td>
+<td style="text-align:center;">
+0.399
+</td>
+<td style="text-align:center;">
+0.401
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Within Adj.
+</td>
+<td style="text-align:center;">
+0.373
+</td>
+<td style="text-align:center;">
+0.373
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+339.5
+</td>
+<td style="text-align:center;">
+341.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+352.7
+</td>
+<td style="text-align:center;">
+356.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+36.76
+</td>
+<td style="text-align:center;">
+36.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Std.Errors
+</td>
+<td style="text-align:center;">
+by: hp
+</td>
+<td style="text-align:center;">
+by: hp
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: gear
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: carb
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: am
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol>
+<p>Notice that a new row was placed before the “Num.Obs.” row in each
+panel with the mean of the dependent variable. This is the default
+setting. If you would like to change where the mean is placed, you will
+need to customize using the <code>panelsummary::panelsummary_raw</code>
+function (see the <a href="https://michaeltopper1.github.io/panelsummary/articles/adding_rows.html">Adding
+Rows to a panelsummary Table</a> vignette for more details). Now, using
+<code>gof_map</code> (see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#gof_map">modelsummary
+website</a>) the goodness-of-fit statistics will be mapped/renamed.
+<strong>Note that the mean of the dependent variable is not included in
+the mapped statistics and cannot be reordered without using
+panelsummary::panelsummary_raw.</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating a renaming tibble to pass into panelsummary </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gm <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span>raw,      <span class="sc">~</span>clean,          <span class="sc">~</span>fmt,  <span class="sc">~</span>omit,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;Observations&quot;</span>, <span class="dv">0</span>,  <span class="cn">FALSE</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;FE: gear&quot;</span>, <span class="st">&quot;FE: Gear&quot;</span>, <span class="dv">0</span>, <span class="cn">FALSE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;FE: carb&quot;</span>, <span class="st">&quot;FE: Carb&quot;</span>, <span class="dv">0</span>, <span class="cn">FALSE</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;FE: am&quot;</span>, <span class="st">&quot;FE: AM&quot;</span>, <span class="dv">0</span>, <span class="cn">FALSE</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## creating the regression table</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2), <span class="fu">list</span>(disp_1, disp_2),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean_dependent =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;Automated Mean of Dependent Variable-Renamed and Reordered&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Automated Mean of Dependent Variable-Renamed and Reordered
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="7">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-0.907
+</td>
+<td style="text-align:center;">
+-1.093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.789)
+</td>
+<td style="text-align:center;">
+(0.801)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: Gear
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: Carb
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: AM
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr grouplength="7">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+43.306
+</td>
+<td style="text-align:center;">
+43.905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(13.075)
+</td>
+<td style="text-align:center;">
+(13.489)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: Gear
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: Carb
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+FE: AM
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol>
+<p>Lastly, as an important aside, any models that are not of class
+<code>fixest</code> will not return a dependent variable mean. There are
+plans to accommodate more models for this feature in the future.</p>
+</div>
+<div id="collapsing-fixed-effects" class="section level2">
+<h2>Collapsing Fixed Effects</h2>
+<p>Notice that in the tables above that the fixed effects in columns (1)
+and (2) are the same across each panel. To reduce the number of rows,
+the <code>collapse_fe</code> argument can be used to show a separate
+panel containing only the fixed effects. Observe that there is also a
+warning message returned when this command is used; the warning message
+is telling the user that the function assumes both panels have the same
+fixed effects for the same models.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## collapsing fixed effects with collapse_fe = T</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2), <span class="fu">list</span>(disp_1, disp_2),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean_dependent =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;Collapsed Fixed Effects&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">collapse_fe =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="st">&quot;Collapsing the fixed effects assumes the fixed effects in all panels are the same!&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in panelsummary(list(mpg_1, mpg_2), list(disp_1, disp_2), mean_dependent</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; = TRUE, : panelsummary does not check if the fixed effects in each panel match.</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; It always assumes they do!</span></span></code></pre></div>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>
+Collapsed Fixed Effects
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="4">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-0.907
+</td>
+<td style="text-align:center;">
+-1.093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.789)
+</td>
+<td style="text-align:center;">
+(0.801)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+<td style="text-align:center;">
+20.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr grouplength="4">
+<td colspan="3" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+43.306
+</td>
+<td style="text-align:center;">
+43.905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(13.075)
+</td>
+<td style="text-align:center;">
+(13.489)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Mean of Dependent Variable
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+<td style="text-align:center;">
+230.722
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FE: Gear
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FE: Carb
+</td>
+<td style="text-align:center;">
+X
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FE: AM
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+X
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Collapsing the fixed effects assumes the fixed effects in
+all panels are the same!
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ol></li>
+</ol>
+<p>Although it does not appear in HTML, a LaTeX version of this table
+will include a horizontal line separating the fixed effects from the
+other panels. This can be switched off using the
+<code>hline_before_fe</code> argument.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

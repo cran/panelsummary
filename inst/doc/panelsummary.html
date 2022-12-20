@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Introduction to panelsummary</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to panelsummary</h1>
+
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $(".lightable-classic").removeClass("table").css("display", "table");
+});
+</script>
+<p><code>panelsummary</code> consists of one main function,
+<code>panelsummary::panelsummary</code>, to provide a simple, yet
+customizable way to create a regression table with multiple panels. As
+of this writing, the package is intended for use with regressions of
+class <code>lm</code> and <code>fixest</code>, with an emphasis on the
+latter. There are more classes in the pipeline, and you can always check
+<code>panelsummary::models_supported</code> for an exhaustive list of
+models supported. However, it is likely that a regression package will
+work if <code>modelsummary</code> supports it, although some
+functionality may be limited (e.g., <code>mean_dependent</code> argument
+will only work with <code>fixest</code> regressions).</p>
+<p>To begin, load in the <code>panelsummary</code> package.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span></code></pre></div>
+<div id="motivating-example" class="section level2">
+<h2>Motivating Example</h2>
+<p>To motivate the power of <code>panelsummary</code>, consider a model
+using the <code>mtcars</code> dataset:</p>
+<p><span class="math display">\[ Y_{i} = hp_i + cyl_i + e_i\]</span>
+Where <span class="math inline">\(Y_i\)</span> is the dependent
+variable, which can be either <span class="math inline">\(mpg_i\)</span>
+or <span class="math inline">\(disp\)</span> of car <span class="math inline">\(i\)</span>, <span class="math inline">\(hp_i\)</span> is the horsepower, <span class="math inline">\(cyl_i\)</span> is the number of cylinders, and
+<span class="math inline">\(e_i\)</span> is the error term. To estimate
+this model with both of the dependent variables, the following code is
+provided:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## estimating the model with two depedent variables:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1) mpg and 2) disp</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(disp <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<p>While one option to present the regression coefficients in a table
+would be to create a separate regression table for each, there is a more
+concise, and cleaner way to present this information. This is where
+<code>panelsummary</code> is most useful. With a simple pass of
+<code>panelsummary::panelsummary</code>, a beautiful regression table is
+created without any additional editing, and can immediately be viewed in
+the RStudio Viewer panel.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating a beautiful regression table with panelsummary</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="14">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+(Intercept)
+</td>
+<td style="text-align:center;">
+36.908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(2.191)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+hp
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.741
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.723
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+169.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+175.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Log.Lik.
+</td>
+<td style="text-align:center;">
+-80.781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+3.02
+</td>
+</tr>
+<tr grouplength="14">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+(Intercept)
+</td>
+<td style="text-align:center;">
+-144.569
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(37.652)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+hp
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+cyl
+</td>
+<td style="text-align:center;">
+55.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.819
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+351.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+357.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Log.Lik.
+</td>
+<td style="text-align:center;">
+-171.793
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+51.91
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Note that the number of arguments passed into <code>...</code> is how
+the delineation of panels is determined. Importantly, the length of the
+character vector passed into <code>panel_labels</code> must match the
+number of arguments passed into <code>...</code>. This ensures that each
+panel has its own label.</p>
+</div>
+<div id="cleaning-variable-names" class="section level2">
+<h2>Cleaning Variable Names</h2>
+<p>Behind the scenes, <code>panelsummary</code> uses
+<code>modelsummary</code> to help create the regression tables. The
+benefit of this is the ability to use <code>coef_map</code> argument
+(which is passed through to <code>modelsummary::modelsummary</code>) to
+clean variable names. Recall that to use <code>coef_map</code>, the
+syntax is <code>c(&quot;old_name&quot; = &quot;new_name&quot;)</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="12">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.741
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.723
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+169.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+175.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Log.Lik.
+</td>
+<td style="text-align:center;">
+-80.781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+3.02
+</td>
+</tr>
+<tr grouplength="12">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2
+</td>
+<td style="text-align:center;">
+0.819
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+AIC
+</td>
+<td style="text-align:center;">
+351.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+BIC
+</td>
+<td style="text-align:center;">
+357.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Log.Lik.
+</td>
+<td style="text-align:center;">
+-171.793
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+RMSE
+</td>
+<td style="text-align:center;">
+51.91
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>For more information on <code>coef_map</code>, see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#coef-renameomitmap">modelsummary
+website</a>.</p>
+</div>
+<div id="excluding-goodness-of-fit-statistics" class="section level2">
+<h2>Excluding Goodness-of-Fit Statistics</h2>
+<p>Similar to cleaning names, <code>panelsummary</code> also supports
+the <code>gof_map</code> and <code>gof_omit</code> arguments from
+<code>modelsummary</code>. In the following, <code>gof_map</code> will
+be used to change the name of “Num.Obs” to “Observations” and “F” to
+“F-stat”, while removing the other goodness-of-fit statistics:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mapping the goodness of fit statistics to new names - see modelsummary for more details</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gm <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span>raw,      <span class="sc">~</span>clean,          <span class="sc">~</span>fmt,  <span class="sc">~</span>omit,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;nobs&quot;</span>,      <span class="st">&quot;Observations&quot;</span>,     <span class="dv">0</span>,  <span class="cn">FALSE</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F-stat&quot;</span>,               <span class="dv">3</span>,  <span class="cn">FALSE</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="6">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="2" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>For more information on how to use <code>gof_map</code>, see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#gof_map">modelsummary
+website</a>.</p>
+</div>
+<div id="adding-additional-models-to-the-table" class="section level2">
+<h2>Adding Additional Models to the Table</h2>
+<p>It is simple to add additional models to each panel in the table.
+This is most useful when presenting robustness of estimates with a
+variety of different explanatory variables. As an example, consider
+three more models with <code>mpg</code> as the dependent variable:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating two additional models for the first panel </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> drat, <span class="at">data =</span> mtcars)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mpg_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span>hp <span class="sc">+</span> cyl <span class="sc">+</span> drat <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<p>To add these models to Panel A, simply replace <code>mpg_1</code>
+with <code>list(mpg_1, mpg_2, mpg_3)</code> in the original code:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="10">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+<td style="text-align:center;">
+-1.361
+</td>
+<td style="text-align:center;">
+-0.762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+(0.635)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+(1.387)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Weight (1000lbs)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.818)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol></li>
+</ol>
+</div>
+<div id="adding-additional-panels-to-the-table" class="section level2">
+<h2>Adding Additional Panels to the Table</h2>
+<p>As alluded to, the number of arguments passed into <code>...</code>
+will determine the number of panels created in the table. Hence, simply
+add another argument to <code>...</code>, and a corresponding label to
+<code>panel_labels</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, <span class="fu">list</span>(mpg_1, mpg_2),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>, <span class="st">&quot;Panel C: Demonstration of Additional Panel&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="10">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+<td style="text-align:center;">
+-1.361
+</td>
+<td style="text-align:center;">
+-0.762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+(0.635)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+(1.387)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Weight (1000lbs)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.818)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="8">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel C: Demonstration of Additional Panel
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265
+</td>
+<td style="text-align:center;">
+-1.361
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol></li>
+</ol>
+<p>At this time, <code>panelsummary</code> <strong>will only support up
+to five panels</strong>. This is done intentionally to discourage an
+overly long table.</p>
+</div>
+<div id="adding-significance-stars" class="section level2">
+<h2>Adding Significance-Stars</h2>
+<p>To add significance stars, simply set the <code>stars</code> argument
+to <code>TRUE</code>. By default, <code>panelsummary</code> uses the
+following convention (symbol=pvalue): +=.1, *=.05, **=.01,
+***=0.001.</p>
+<p>However, you can also change the significance stars by passing in a
+vector of corresponding significance:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## change the significance stars to match economic convention</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>table_stars <span class="ot">&lt;-</span> <span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>table_stars </span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="10">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029*
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265***
+</td>
+<td style="text-align:center;">
+-1.361*
+</td>
+<td style="text-align:center;">
+-0.762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+(0.635)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841*
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+(1.387)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Weight (1000lbs)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.973***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.818)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063***
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol></li>
+</ol>
+<p>However, you if you plan on using the economics convention of *=.1,
+**=.05, ***=.01, you can simply pass in the word “econ”.</p>
+</div>
+<div id="customizing-with-kableextra" class="section level2">
+<h2>Customizing With <code>kableExtra</code></h2>
+<p>When <code>panelsummary::panelsummary</code> is executed, a
+<code>kableExtra</code> object is created. The benefit of this feature
+is that all of <code>kableExtra</code>’s customizing functions are ready
+to pipe into. For instance, suppose a table calls for a new theme, a
+header above the model numbers, a footnote denoting significance:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## customizing the table with kableExtra</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>table_stars <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot; &quot;</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">&quot;Models Using mtcars&quot;</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Customizations done using kableExtra package&quot;</span>))</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Models Using mtcars
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="10">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029*
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265***
+</td>
+<td style="text-align:center;">
+-1.361*
+</td>
+<td style="text-align:center;">
+-0.762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+(0.635)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841*
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+(1.387)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Weight (1000lbs)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.973***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.818)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063***
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Customizations done using kableExtra package
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ol></li>
+</ol></li>
+</ol>
+</div>
+<div id="renaming-colnames" class="section level2">
+<h2>Renaming Colnames</h2>
+<p>By default, <code>panelsummary</code> names the first column with an
+empty space, and each subsequent column with the numbers (1), (2),
+(3)…etc. To rename the columns, use the <code>colnames</code> argument
+and pass in a character vector which matches the length of the columns
+in the table. In this particular example, the column names are set to
+“Column 1”, “Column 2”, “Column 3”, and “Column 4”. Note that no element
+in the vector may be empty and hence, a single whitespace character is
+needed to give a blank look (not shown here):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span><span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>, <span class="st">&quot;Column 3&quot;</span>, <span class="st">&quot;Column 4&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Column 1
+</th>
+<th style="text-align:center;">
+Column 2
+</th>
+<th style="text-align:center;">
+Column 3
+</th>
+<th style="text-align:center;">
+Column 4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="10">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel A: MPG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+-0.019
+</td>
+<td style="text-align:center;">
+-0.029*
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+-2.265***
+</td>
+<td style="text-align:center;">
+-1.361*
+</td>
+<td style="text-align:center;">
+-0.762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.576)
+</td>
+<td style="text-align:center;">
+(0.735)
+</td>
+<td style="text-align:center;">
+(0.635)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Rear Axle Ratio
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+2.841*
+</td>
+<td style="text-align:center;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(1.522)
+</td>
+<td style="text-align:center;">
+(1.387)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Weight (1000lbs)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-2.973***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.818)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="4" style="border-bottom: 1px solid;">
+Panel B: Displacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Horse Power
+</td>
+<td style="text-align:center;">
+0.236
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(0.258)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Cylinder
+</td>
+<td style="text-align:center;">
+55.063***
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+</td>
+<td style="text-align:center;">
+(9.898)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Observations
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="italicsboldshorizontal-lines" class="section level2">
+<h2>Italics/Bolds/Horizontal Lines</h2>
+<p>The labels passed into <code>panel_labels</code> can be changed to
+bold and/or italics using the <code>bold</code> and <code>italic</code>
+arguments. Furthermore, horizontal lines can be added below each label
+using the <code>hline_after</code> argument.</p>
+</div>
+<div id="output" class="section level2">
+<h2>Output</h2>
+<p>The output is controlled using the <code>format</code> argument. By
+default, a <code>kableExtra</code> object is created which works
+seamlessly with Rmarkdown and knits automatically to LaTeX and HTML. For
+users that prefer to use their own LaTeX software over Rmarkdown, the
+<code>format</code> option can be switched to “latex” to give the
+corresponding LaTeX code for the table. <em>Note:</em> the tables are
+automatically set to booktabs style and therefore the booktabs LaTeX
+package is necessary (<code>usepackage{booktabs}</code>) in your tex
+file if the LaTeX output is copy and pasted.</p>
+</div>
+<div id="use-with-fixest" class="section level2">
+<h2>Use with <code>fixest</code></h2>
+<p>The <code>panelsummary</code> package works best with the
+<code>fixest</code> package to fully take advantage of its offerings.
+See the <a href="https://michaeltopper1.github.io/panelsummary/articles/with_fixest.html">Using
+<code>panelsummary</code> with <code>fixest</code> vignette</a>. Some of
+the capabilities include:</p>
+<ul>
+<li>Collapsing fixed effects</li>
+<li>Including the mean of the dependent variable.</li>
+</ul>
+</div>
+<div id="adding-rows-to-a-panelsummary-table" class="section level2">
+<h2>Adding rows to a panelsummary table</h2>
+<p>Adding custom rows requires a different workflow rather than simply
+calling <code>panelsummary::panelsummary</code>, although it is still
+quite simple. See the <a href="https://michaeltopper1.github.io/panelsummary/articles/adding_rows.html">Adding
+Rows to a panelsummary Table</a> vignette for a detailed example.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
