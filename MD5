@@ -1,6 +1,6 @@
-5516f660fb7d7125e586b670d0c9dced *DESCRIPTION
+81a83a77f4f4af3590b4fa07bbef0ac9 *DESCRIPTION
 0c916efc925629db231c5778956a133c *NAMESPACE
-5eb1ba1a011a7afb111650caa7c203ce *NEWS.md
+ef50286a96ba310cfa62ff49637f2488 *NEWS.md
 b82cf9d251ade19db2175510d79b3419 *R/add_panels.R
 8d04f1e1a043c7e16251f4c29f97b680 *R/check_dimensions_match.R
 86fdb13774a0cb4df2cd144f1e17ca1f *R/clean_raw.R
@@ -9,10 +9,10 @@ f0c010a59dd7502aa5cccaea949153a0 *R/create_panels_null.R
 d12f965056854e09b07e4088b25fab72 *R/helper_functions.R
 c69431ce4cab1b05c1bd2275dd0709d4 *R/models_supported.R
 df45014be64d171d54e780883a92767f *R/panelsummary-package.R
-7e8f9eda09e4d123a98b9d918d903bd3 *R/panelsummary.R
-c1ebacf8242c1e691cf06d778c9a5812 *R/panelsummary_raw.R
-029ef88b7127115f006c4cd2eacc3001 *README.md
-790f38d59742673a4ff604b18827ba15 *build/partial.rdb
+53eee0ba423a237e6d2a348bad46dc95 *R/panelsummary.R
+489a6ddb56af750c780b66df934c43d4 *R/panelsummary_raw.R
+796281aded515dbc3e3e184e952d38d2 *README.md
+69808ecfc39f9fe971bdebf50651132d *build/partial.rdb
 f8be182dc866fb020f7ee14673d204f3 *build/vignette.rds
 f30a5664d97472415d33c56a03d7887c *inst/doc/adding_rows.R
 172b6b694b96cefd2548356763d13b7c *inst/doc/adding_rows.Rmd
@@ -45,8 +45,8 @@ fc15f9ec4d2b2bc70740d192f9871bc4 *man/figures/example_table_readme.png
 28b35b44841c816d700ddf3658132a41 *man/get_panel_indices_collapse.Rd
 27e59ffa7c3d3e2acc357e1053618721 *man/models_supported.Rd
 4e0d6015be10453770ddd1c9c650f807 *man/panelsummary-package.Rd
-b39abb4fcfa5d005f366a8f91b01eae9 *man/panelsummary.Rd
-5c71b1e4137246566ec813dca79d8f3a *man/panelsummary_raw.Rd
+0bf515cd44d50f55ad570afa435ede86 *man/panelsummary.Rd
+056db82c6288974a755f0aac8c5ad6d4 *man/panelsummary_raw.Rd
 8d2fa39c441dc38db6c9c17f0e0d404a *man/remove_fe.Rd
 a9135e2aa39ebe07405aa3bd59e48f4e *man/shift_means.Rd
 6de55a5a4fb0cdd6cbc5756a1d026514 *tests/testthat.R
