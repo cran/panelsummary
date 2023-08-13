@@ -80,7 +80,7 @@ panelsummary(
 \item \code{fmt = fmt_decimal(digits = 2, pdigits = 3)}: Decimal digits for estimate and p values
 \item \code{fmt = fmt_sprintf("\%.3f")}: See \code{?sprintf}
 \item \code{fmt = fmt_term("(Intercept)" = 1, "X" = 2)}: Format terms differently
-\item \code{fmt = fmt_statistic("estimate" = 1, "std.error" = 2)}: Format statistics differently.
+\item \code{fmt = fmt_statistic("estimate" = 1, "r.sqared" = 6)}: Format statistics differently.
 \item \code{fmt = fmt_identity()}: unformatted raw values
 }
 \item string:
@@ -100,8 +100,8 @@ the data.frame produced by \code{get_estimates(model)}, and strings with curly b
 statistics to report vertically below the estimate. NULL omits all
 uncertainty statistics.
 \itemize{
-\item "conf.int", "std.error", "statistic", "p.value", "conf.low", "conf.high",
-or any column name produced by: \code{get_estimates(model)}
+\item "conf.int", "std.error", "statistic", "p.value", "conf.low", "conf.high", .
+or any column name produced by \code{get_estimates(model)}
 \item \code{glue} package strings with braces, with or without R functions, such as:
 \itemize{
 \item \code{"{p.value} [{conf.low}, {conf.high}]"}
@@ -110,6 +110,7 @@ or any column name produced by: \code{get_estimates(model)}
 }
 \item Numbers are automatically rounded and converted to strings. To apply functions to their numeric values, as in the last \code{glue} example, users must set \code{fmt=NULL}.
 \item Parentheses are added automatically unless the string includes \code{glue} curly braces \code{{}}.
+\item Some statistics are not supported for all models. See column names in \code{get_estimates(model)}, and visit the website to learn how to add custom statistics.
 }}
 
 \item{vcov}{robust standard errors and other manual statistics. The \code{vcov}
@@ -169,7 +170,7 @@ Examples section below.}
 model information. This argument accepts 4 types of values:
 \itemize{
 \item NULL (default): the \code{modelsummary::gof_map} dictionary is used for formatting, and all unknown statistic are included.
-\item character vector: "all", "none", or a vector of statistics such as \code{c("rmse", "nobs", "r.squared")}. Elements correspond to colnames in the data.frame produced by \code{get_gof(model)}. The \code{modelsummary::gof_map}default dictionary is used to format and rename statistics.
+\item character vector: "all", "none", or a vector of statistics such as \code{c("rmse", "nobs", "r.squared")}. Elements correspond to colnames in the data.frame produced by \code{get_gof(model)}. The \code{modelsummary::gof_map} default dictionary is used to format and rename statistics.
 \item NA: excludes all statistics from the bottom part of the table.
 \item data.frame with 3 columns named "raw", "clean", "fmt". Unknown statistics are omitted. See the 'Examples' section below.
 \item list of lists, each of which includes 3 elements named "raw", "clean", "fmt". Unknown statistics are omitted. See the 'Examples section below'.
@@ -199,11 +200,10 @@ panelsummary(reg_1, reg_2, panel_labels = c("Panel A: MPG", "Panel B: Displaceme
 
 
 # Panelsummary with fixest -------------------------
+\dontrun{
+ols_1 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp, nthreads = 2)
 
-ols_1 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp)
-ols_2 <- mtcars |> fixest::feols(disp ~  cyl | gear + carb, cluster = ~hp)
-
-panelsummary(ols_1, ols_2, mean_dependent = TRUE,
+panelsummary(ols_1, ols_1, mean_dependent = TRUE,
             panel_labels = c("Panel A:MPG", "Panel B: DISP"),
             caption = "The effect of cyl on MPG and DISP",
             italic = TRUE, stars = TRUE)
@@ -211,29 +211,18 @@ panelsummary(ols_1, ols_2, mean_dependent = TRUE,
 
 ## Collapsing fixed effects (fixest-only)----------------
 
-ols_1 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp)
-
-ols_2 <- mtcars |> fixest::feols(disp ~  cyl | gear + carb, cluster = ~hp)
-
-panelsummary(ols_1, ols_2, mean_dependent = TRUE,
+panelsummary(ols_1, ols_1, mean_dependent = TRUE,
             collapse_fe = TRUE, panel_labels = c("Panel A: MPG", "Panel B: DISP"),
             caption = "The effect of cyl on MPG and DISP",
             italic = TRUE, stars = TRUE)
 
 ## Including multiple models------------------
 
-ols_1 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp)
 
-ols_2 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp)
-
-ols_3 <- mtcars |> fixest::feols(mpg ~  cyl | gear + carb, cluster = ~hp)
-
-ols_4 <- mtcars |> fixest::feols(disp ~  cyl | gear + carb, cluster = ~hp)
-
-panelsummary(list(ols_1, ols_2, ols_3), ols_4,
+panelsummary(list(ols_1, ols_1, ols_1), ols_1,
              panel_labels = c("Panel A: MPG", "Panel B: DISP"),
               caption = "Multiple models",
               stars = TRUE)
 
-
+}
 }

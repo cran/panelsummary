@@ -564,7 +564,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<script type="text/javascript">
+<script>
 $( document ).ready(function() {
   $(".lightable-classic").removeClass("table").css("display", "table");
 });
@@ -611,20 +611,20 @@ completely made up), the following steps will show how to complete such
 task.</p>
 <p>Consider the following models, estimated using the
 <code>fixest</code> package:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Panel A: mpg dependent variable</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span>cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Panel B: wt dependent variable</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>wt_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>wt_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## Panel A: mpg dependent variable</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span>cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## Panel B: wt dependent variable</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>wt_1 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> disp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>wt_2 <span class="ot">&lt;-</span> fixest<span class="sc">::</span><span class="fu">feols</span>(wt <span class="sc">~</span> cyl <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <p>Recall that putting each of these two models in a list will result in
 multiple specifications per-panel.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## putting each panel&#39;s models into a list—one for each panel</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>panel_a_mpg <span class="ot">&lt;-</span> <span class="fu">list</span>(mpg_1, mpg_2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>panel_b_wt <span class="ot">&lt;-</span> <span class="fu">list</span>(wt_1, wt_2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## putting each panel&#39;s models into a list—one for each panel</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>panel_a_mpg <span class="ot">&lt;-</span> <span class="fu">list</span>(mpg_1, mpg_2)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>panel_b_wt <span class="ot">&lt;-</span> <span class="fu">list</span>(wt_1, wt_2)</span></code></pre></div>
 <p>Now, I will pass these two lists into
 <code>panelsummary::panelsummary_raw</code>. Note that this function
 shares many of the same arguments as
@@ -633,87 +633,87 @@ use the arguments <code>stars</code> (significance stars),
 <code>mean_dependent</code> (for dependent variable mean), and
 <code>gof_omit</code> (to omit <span class="math inline">\(R^2\)</span>
 statistics):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating the dataframe</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;^R&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          term   Model 1   Model 2</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                 (Intercept) 34.661*** 34.522***</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                               (2.547)   (2.603)</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                         cyl  -1.587** -2.501***</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                               (0.712)   (0.361)</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                        disp   -0.021*          </span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                               (0.010)          </span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                          am              2.567*</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                         (1.291)</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  Mean of Dependent Variable    20.091    20.091</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10                   Num.Obs.        32        32</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                        AIC     165.1     165.2</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                        BIC     169.5     169.6</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                 Std.Errors       IID       IID</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                (Intercept)  1.773***  1.566***</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                              (0.386)   (0.453)</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                        cyl    -0.054  0.317***</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                              (0.108)   (0.063)</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                       disp  0.008***          </span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                              (0.002)          </span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20                         am           -0.765***</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21                                        (0.225)</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 Mean of Dependent Variable     3.217     3.217</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23                   Num.Obs.        32        32</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24                        AIC      44.4      53.3</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25                        BIC      48.8      57.7</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26                 Std.Errors       IID       IID</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## creating the dataframe</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;^R&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;                          term   Model 1   Model 2</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 1                 (Intercept) 34.661*** 34.522***</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 2                               (2.547)   (2.603)</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 3                         cyl  -1.587** -2.501***</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 4                               (0.712)   (0.361)</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 5                        disp   -0.021*          </span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 6                               (0.010)          </span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 7                          am              2.567*</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; 8                                         (1.291)</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 9  Mean of Dependent Variable    20.091    20.091</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 10                   Num.Obs.        32        32</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; 11                        AIC     165.1     165.2</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; 12                        BIC     169.5     169.6</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; 13                 Std.Errors       IID       IID</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; 14                (Intercept)  1.773***  1.566***</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 15                              (0.386)   (0.453)</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; 16                        cyl    -0.054  0.317***</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; 17                              (0.108)   (0.063)</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; 18                       disp  0.008***          </span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 19                              (0.002)          </span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 20                         am           -0.765***</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 21                                        (0.225)</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 22 Mean of Dependent Variable     3.217     3.217</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 23                   Num.Obs.        32        32</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; 24                        AIC      44.4      53.3</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 25                        BIC      48.8      57.7</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; 26                 Std.Errors       IID       IID</span></span></code></pre></div>
 <p>The return value of this output is a dataframe without panel labels.
 Given that it is a dataframe, you can use <code>dplyr</code> functions
 to easily manipulate. For instance, I will use the
 <code>dplyr::add_rows</code> function to add the pseudo
 wild-cluster-bootstrap p-values to the table:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## adding rows using dplyr::add_row</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="ot">&lt;-</span> <span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;R&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.002&quot;</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">.before =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.005&quot;</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">.before =</span> <span class="dv">22</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>bootstrap_table</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                               term   Model 1   Model 2</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                      (Intercept) 34.661*** 34.522***</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                    (2.547)   (2.603)</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                              cyl  -1.587** -2.501***</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                                    (0.712)   (0.361)</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                             disp   -0.021*          </span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                                    (0.010)          </span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                               am              2.567*</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                              (1.291)</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9       Mean of Dependent Variable    20.091    20.091</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Wild Cluster Boot P-value (cyl)      .001      .002</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                        Num.Obs.        32        32</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                             AIC     165.1     165.2</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                             BIC     169.5     169.6</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                      Std.Errors       IID       IID</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                     (Intercept)  1.773***  1.566***</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                                   (0.386)   (0.453)</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                             cyl    -0.054  0.317***</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                                   (0.108)   (0.063)</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                            disp  0.008***          </span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20                                   (0.002)          </span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21                              am           -0.765***</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 Wild Cluster Boot P-value (cyl)      .001      .005</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23                                             (0.225)</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24      Mean of Dependent Variable     3.217     3.217</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25                        Num.Obs.        32        32</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26                             AIC      44.4      53.3</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27                             BIC      48.8      57.7</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28                      Std.Errors       IID       IID</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">## adding rows using dplyr::add_row</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>bootstrap_table <span class="ot">&lt;-</span> <span class="fu">panelsummary_raw</span>(panel_a_mpg, panel_b_wt,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                 <span class="at">stars =</span> <span class="st">&quot;econ&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                 <span class="at">mean_dependent =</span> T,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                 <span class="at">gof_omit =</span> <span class="st">&quot;R&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.002&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>                <span class="at">.before =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">term =</span> <span class="st">&quot;Wild Cluster Boot P-value (cyl)&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.001&quot;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>                 <span class="st">`</span><span class="at">Model 2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;.005&quot;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>                 <span class="at">.before =</span> <span class="dv">22</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>bootstrap_table</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;                               term   Model 1   Model 2</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 1                      (Intercept) 34.661*** 34.522***</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 2                                    (2.547)   (2.603)</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 3                              cyl  -1.587** -2.501***</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 4                                    (0.712)   (0.361)</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 5                             disp   -0.021*          </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; 6                                    (0.010)          </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; 7                               am              2.567*</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; 8                                              (1.291)</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; 9       Mean of Dependent Variable    20.091    20.091</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; 10 Wild Cluster Boot P-value (cyl)      .001      .002</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; 11                        Num.Obs.        32        32</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 12                             AIC     165.1     165.2</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; 13                             BIC     169.5     169.6</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; 14                      Std.Errors       IID       IID</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; 15                     (Intercept)  1.773***  1.566***</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; 16                                   (0.386)   (0.453)</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; 17                             cyl    -0.054  0.317***</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; 18                                   (0.108)   (0.063)</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 19                            disp  0.008***          </span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; 20                                   (0.002)          </span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; 21                              am           -0.765***</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; 22 Wild Cluster Boot P-value (cyl)      .001      .005</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; 23                                             (0.225)</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; 24      Mean of Dependent Variable     3.217     3.217</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; 25                        Num.Obs.        32        32</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; 26                             AIC      44.4      53.3</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; 27                             BIC      48.8      57.7</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; 28                      Std.Errors       IID       IID</span></span></code></pre></div>
 <p>Now the dataframe is ready to be passed into
 <code>kableExtra::kbl</code> to further customize it with panel
 headers/column names etc. Alternatively, you can use the
@@ -730,9 +730,9 @@ first column, and consecutive numbers in the remaining columns.</li>
 </ul>
 <p>However, you can also pass in a caption using the
 <code>caption</code> argument:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating a kableExtra object with a few desirable defaults</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## creating a kableExtra object with a few desirable defaults</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>)</span></code></pre></div>
 <table>
 <caption>
 A customized panelsummary table with added rows.
@@ -1048,17 +1048,17 @@ IID
 </ol>
 <p>Finally, to get the desired panel labels, you will need to use
 <code>kableExtra::pack_rows</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating the final panels.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="dv">1</span>, <span class="dv">14</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel B: Cyl&quot;</span>, <span class="dv">15</span>, <span class="dv">28</span>, </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">## creating the final panels.</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>bootstrap_table <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">clean_raw</span>(<span class="at">caption =</span> <span class="st">&quot;A customized panelsummary table with added rows.&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="dv">1</span>, <span class="dv">14</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">pack_rows</span>(<span class="st">&quot;Panel B: Cyl&quot;</span>, <span class="dv">15</span>, <span class="dv">28</span>, </span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                        <span class="at">italic =</span> T,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>                        <span class="at">bold =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
 <table style="NAborder-bottom: 0; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;" class=" lightable-classic">
 <caption>
 A customized panelsummary table with added rows.

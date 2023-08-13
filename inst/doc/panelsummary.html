@@ -564,7 +564,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<script type="text/javascript">
+<script>
 $( document ).ready(function() {
   $(".lightable-classic").removeClass("table").css("display", "table");
 });
@@ -581,22 +581,21 @@ work if <code>modelsummary</code> supports it, although some
 functionality may be limited (e.g., <code>mean_dependent</code> argument
 will only work with <code>fixest</code> regressions).</p>
 <p>To begin, load in the <code>panelsummary</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(panelsummary)</span></code></pre></div>
 <div id="motivating-example" class="section level2">
 <h2>Motivating Example</h2>
 <p>To motivate the power of <code>panelsummary</code>, consider a model
 using the <code>mtcars</code> dataset:</p>
-<p><span class="math display">\[ Y_{i} = hp_i + cyl_i + e_i\]</span>
-Where <span class="math inline">\(Y_i\)</span> is the dependent
-variable, which can be either <span class="math inline">\(mpg_i\)</span>
-or <span class="math inline">\(disp\)</span> of car <span class="math inline">\(i\)</span>, <span class="math inline">\(hp_i\)</span> is the horsepower, <span class="math inline">\(cyl_i\)</span> is the number of cylinders, and
+<p><span class="math display">\[ Y_{i} = \beta_0 + \beta_1hp_i +
+\beta_2cyl_i + e_i\]</span> Where <span class="math inline">\(Y_i\)</span> is the dependent variable, which can
+be either <span class="math inline">\(mpg_i\)</span> or <span class="math inline">\(disp\)</span> of car <span class="math inline">\(i\)</span>, <span class="math inline">\(hp_i\)</span> is the horsepower, <span class="math inline">\(cyl_i\)</span> is the number of cylinders, and
 <span class="math inline">\(e_i\)</span> is the error term. To estimate
 this model with both of the dependent variables, the following code is
 provided:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## estimating the model with two depedent variables:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1) mpg and 2) disp</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(disp <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## estimating the model with two depedent variables:</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="do">## 1) mpg and 2) disp</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(disp <span class="sc">~</span> hp <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <p>While one option to present the regression coefficients in a table
 would be to create a separate regression table for each, there is a more
 concise, and cleaner way to present this information. This is where
@@ -604,9 +603,9 @@ concise, and cleaner way to present this information. This is where
 <code>panelsummary::panelsummary</code>, a beautiful regression table is
 created without any additional editing, and can immediately be viewed in
 the RStudio Viewer panel.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating a beautiful regression table with panelsummary</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## creating a beautiful regression table with panelsummary</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -618,7 +617,7 @@ the RStudio Viewer panel.</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="14">
+<tr grouplength="13">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -718,21 +717,13 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
 3.02
 </td>
 </tr>
-<tr grouplength="14">
+<tr grouplength="13">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -832,14 +823,6 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F
-</td>
-<td style="text-align:center;">
-65.561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
@@ -863,10 +846,10 @@ benefit of this is the ability to use <code>coef_map</code> argument
 (which is passed through to <code>modelsummary::modelsummary</code>) to
 clean variable names. Recall that to use <code>coef_map</code>, the
 syntax is <code>c(&quot;old_name&quot; = &quot;new_name&quot;)</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -878,7 +861,7 @@ syntax is <code>c(&quot;old_name&quot; = &quot;new_name&quot;)</code>:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="12">
+<tr grouplength="11">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -963,21 +946,13 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
 3.02
 </td>
 </tr>
-<tr grouplength="12">
+<tr grouplength="11">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1062,14 +1037,6 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F
-</td>
-<td style="text-align:center;">
-65.561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
@@ -1089,17 +1056,17 @@ the <code>gof_map</code> and <code>gof_omit</code> arguments from
 <code>modelsummary</code>. In the following, <code>gof_map</code> will
 be used to change the name of “Num.Obs” to “Observations” and “F” to
 “F-stat”, while removing the other goodness-of-fit statistics:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mapping the goodness of fit statistics to new names - see modelsummary for more details</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gm <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span>raw,      <span class="sc">~</span>clean,          <span class="sc">~</span>fmt,  <span class="sc">~</span>omit,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;nobs&quot;</span>,      <span class="st">&quot;Observations&quot;</span>,     <span class="dv">0</span>,  <span class="cn">FALSE</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F-stat&quot;</span>,               <span class="dv">3</span>,  <span class="cn">FALSE</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## mapping the goodness of fit statistics to new names - see modelsummary for more details</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>gm <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>        <span class="sc">~</span>raw,      <span class="sc">~</span>clean,          <span class="sc">~</span>fmt,  <span class="sc">~</span>omit,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>        <span class="st">&quot;nobs&quot;</span>,      <span class="st">&quot;Observations&quot;</span>,     <span class="dv">0</span>,  <span class="cn">FALSE</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>        <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F-stat&quot;</span>,               <span class="dv">3</span>,  <span class="cn">FALSE</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">panelsummary</span>(mpg_1, disp_1, </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1111,7 +1078,7 @@ be used to change the name of “Num.Obs” to “Observations” and “F” to
 </tr>
 </thead>
 <tbody>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1154,15 +1121,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1205,14 +1164,6 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
-</td>
-</tr>
 </tbody>
 </table></li>
 </ol>
@@ -1225,18 +1176,18 @@ website</a>.</p>
 This is most useful when presenting robustness of estimates with a
 variety of different explanatory variables. As an example, consider
 three more models with <code>mpg</code> as the dependent variable:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## creating two additional models for the first panel </span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> drat, <span class="at">data =</span> mtcars)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mpg_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span>hp <span class="sc">+</span> cyl <span class="sc">+</span> drat <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">## creating two additional models for the first panel </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> cyl <span class="sc">+</span> drat, <span class="at">data =</span> mtcars)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>mpg_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span>hp <span class="sc">+</span> cyl <span class="sc">+</span> drat <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <p>To add these models to Panel A, simply replace <code>mpg_1</code>
 with <code>list(mpg_1, mpg_2, mpg_3)</code> in the original code:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1254,7 +1205,7 @@ with <code>list(mpg_1, mpg_2, mpg_3)</code> in the original code:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="10">
+<tr grouplength="9">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1375,21 +1326,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-36.839
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1446,18 +1383,6 @@ Observations
 </td>
 <td style="text-align:center;">
 32
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
 </td>
 <td style="text-align:center;">
 </td>
@@ -1476,13 +1401,13 @@ F-stat
 will determine the number of panels created in the table. Hence, simply
 add another argument to <code>...</code>, and a corresponding label to
 <code>panel_labels</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, <span class="fu">list</span>(mpg_1, mpg_2),</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>, <span class="st">&quot;Panel C: Demonstration of Additional Panel&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, <span class="fu">list</span>(mpg_1, mpg_2),</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>, <span class="st">&quot;Panel C: Demonstration of Additional Panel&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1500,7 +1425,7 @@ add another argument to <code>...</code>, and a corresponding label to
 </tr>
 </thead>
 <tbody>
-<tr grouplength="10">
+<tr grouplength="9">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1621,21 +1546,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-36.839
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1698,19 +1609,7 @@ Observations
 <td style="text-align:center;">
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr grouplength="8">
+<tr grouplength="7">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel C: Demonstration of Additional Panel
 </td>
@@ -1801,19 +1700,6 @@ Observations
 <td style="text-align:center;">
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
 </tbody>
 </table></li>
 </ol></li>
@@ -1831,16 +1717,16 @@ following convention (symbol=pvalue): +=.1, *=.05, **=.01,
 ***=0.001.</p>
 <p>However, you can also change the significance stars by passing in a
 vector of corresponding significance:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## change the significance stars to match economic convention</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>table_stars <span class="ot">&lt;-</span> <span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>table_stars </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="do">## change the significance stars to match economic convention</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>table_stars <span class="ot">&lt;-</span> <span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>))</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>table_stars </span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1858,7 +1744,7 @@ vector of corresponding significance:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="10">
+<tr grouplength="9">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1979,21 +1865,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-36.839
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -2056,18 +1928,6 @@ Observations
 <td style="text-align:center;">
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
 </tbody>
 </table></li>
 </ol></li>
@@ -2083,14 +1943,14 @@ F-stat
 is that all of <code>kableExtra</code>’s customizing functions are ready
 to pipe into. For instance, suppose a table calls for a new theme, a
 header above the model numbers, a footnote denoting significance:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## customizing the table with kableExtra</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>table_stars <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot; &quot;</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">&quot;Models Using mtcars&quot;</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Customizations done using kableExtra package&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="do">## customizing the table with kableExtra</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>table_stars <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot; &quot;</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">&quot;Models Using mtcars&quot;</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="fu">list</span>(<span class="st">&quot;* p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>                <span class="st">&quot;Customizations done using kableExtra package&quot;</span>))</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
 <thead>
 <tr>
@@ -2117,7 +1977,7 @@ Models Using mtcars
 </tr>
 </thead>
 <tbody>
-<tr grouplength="10">
+<tr grouplength="9">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -2238,21 +2098,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-36.839
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -2309,18 +2155,6 @@ Observations
 </td>
 <td style="text-align:center;">
 32
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
 </td>
 <td style="text-align:center;">
 </td>
@@ -2360,16 +2194,16 @@ in the table. In this particular example, the column names are set to
 “Column 1”, “Column 2”, “Column 3”, and “Column 4”. Note that no element
 in the vector may be empty and hence, a single whitespace character is
 needed to give a blank look (not shown here):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span><span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>, <span class="st">&quot;Column 3&quot;</span>, <span class="st">&quot;Column 4&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">panelsummary</span>(<span class="fu">list</span>(mpg_1, mpg_2, mpg_3), disp_1, </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;hp&quot;</span> <span class="ot">=</span> <span class="st">&quot;Horse Power&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                          <span class="st">&quot;cyl&quot;</span> <span class="ot">=</span> <span class="st">&quot;Cylinder&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                          <span class="st">&quot;drat&quot;</span> <span class="ot">=</span> <span class="st">&quot;Rear Axle Ratio&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>                          <span class="st">&quot;wt&quot;</span> <span class="ot">=</span> <span class="st">&quot;Weight (1000lbs)&quot;</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>             <span class="at">gof_map =</span> gm,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>             <span class="at">stars =</span><span class="fu">c</span>(<span class="st">&#39;*&#39;</span> <span class="ot">=</span> .<span class="dv">1</span>, <span class="st">&#39;**&#39;</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">&#39;***&#39;</span> <span class="ot">=</span> .<span class="dv">01</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>             <span class="at">panel_labels =</span> <span class="fu">c</span>(<span class="st">&quot;Panel A: MPG&quot;</span>, <span class="st">&quot;Panel B: Displacement&quot;</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>             <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>, <span class="st">&quot;Column 3&quot;</span>, <span class="st">&quot;Column 4&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F, <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
 <table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2388,7 +2222,7 @@ Column 4
 </tr>
 </thead>
 <tbody>
-<tr grouplength="10">
+<tr grouplength="9">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -2509,21 +2343,7 @@ Observations
 32
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-41.422
-</td>
-<td style="text-align:center;">
-31.141
-</td>
-<td style="text-align:center;">
-36.839
-</td>
-</tr>
-<tr grouplength="6">
+<tr grouplength="5">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -2580,18 +2400,6 @@ Observations
 </td>
 <td style="text-align:center;">
 32
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-F-stat
-</td>
-<td style="text-align:center;">
-65.561
 </td>
 <td style="text-align:center;">
 </td>
