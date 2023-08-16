@@ -1,7 +1,7 @@
 Type: Package
 Package: panelsummary
 Title: Create Publication-Ready Regression Tables with Panels
-Version: 0.1.2
+Version: 0.1.2.1
 Authors@R: c(
     person("Michael", "Topper", , "miketopper123@gmail.com", role = c("aut", "cre")),
     person("Vincent", "Arel-Bundock", role = c("cph"), 
@@ -23,9 +23,9 @@ Encoding: UTF-8
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-08-13 18:33:43 UTC; michaeltopper
+Packaged: 2023-08-16 02:38:50 UTC; michaeltopper
 Author: Michael Topper [aut, cre],
   Vincent Arel-Bundock [cph] (Some documentation is inherited from
     'modelsummary')
 Repository: CRAN
-Date/Publication: 2023-08-13 18:50:02 UTC
+Date/Publication: 2023-08-16 09:00:02 UTC
