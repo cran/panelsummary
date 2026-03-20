@@ -273,7 +273,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -284,7 +284,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -617,7 +617,7 @@ the RStudio Viewer panel.</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="13">
+<tr grouplength="14">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -717,13 +717,21 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
 3.02
 </td>
 </tr>
-<tr grouplength="13">
+<tr grouplength="14">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -823,6 +831,14 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
@@ -861,7 +877,7 @@ syntax is <code>c(&quot;old_name&quot; = &quot;new_name&quot;)</code>:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="11">
+<tr grouplength="12">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -946,13 +962,21 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
 3.02
 </td>
 </tr>
-<tr grouplength="11">
+<tr grouplength="12">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1037,6 +1061,14 @@ Log.Lik.
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 RMSE
 </td>
 <td style="text-align:center;">
@@ -1046,8 +1078,8 @@ RMSE
 </tbody>
 </table></li>
 </ol>
-<p>For more information on <code>coef_map</code>, see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#coef-renameomitmap">modelsummary
-website</a>.</p>
+<p>For more information on <code>coef_map</code>, see the
+<code>modelsummary</code> documentation.</p>
 </div>
 <div id="excluding-goodness-of-fit-statistics" class="section level2">
 <h2>Excluding Goodness-of-Fit Statistics</h2>
@@ -1078,7 +1110,7 @@ be used to change the name of “Num.Obs” to “Observations” and “F” to
 </tr>
 </thead>
 <tbody>
-<tr grouplength="5">
+<tr grouplength="6">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1121,7 +1153,15 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="2" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1164,11 +1204,19 @@ Observations
 32
 </td>
 </tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+</tr>
 </tbody>
 </table></li>
 </ol>
-<p>For more information on how to use <code>gof_map</code>, see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#gof_map">modelsummary
-website</a>.</p>
+<p>For more information on how to use <code>gof_map</code>, see the
+modelsummary documentation.</p>
 </div>
 <div id="adding-additional-models-to-the-table" class="section level2">
 <h2>Adding Additional Models to the Table</h2>
@@ -1205,7 +1253,7 @@ with <code>list(mpg_1, mpg_2, mpg_3)</code> in the original code:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="9">
+<tr grouplength="10">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1326,7 +1374,21 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1383,6 +1445,18 @@ Observations
 </td>
 <td style="text-align:center;">
 32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
 </td>
 <td style="text-align:center;">
 </td>
@@ -1425,7 +1499,7 @@ add another argument to <code>...</code>, and a corresponding label to
 </tr>
 </thead>
 <tbody>
-<tr grouplength="9">
+<tr grouplength="10">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1546,7 +1620,21 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1609,7 +1697,19 @@ Observations
 <td style="text-align:center;">
 </td>
 </tr>
-<tr grouplength="7">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="8">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel C: Demonstration of Additional Panel
 </td>
@@ -1700,6 +1800,19 @@ Observations
 <td style="text-align:center;">
 </td>
 </tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
 </tbody>
 </table></li>
 </ol></li>
@@ -1744,7 +1857,7 @@ vector of corresponding significance:</p>
 </tr>
 </thead>
 <tbody>
-<tr grouplength="9">
+<tr grouplength="10">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -1865,7 +1978,21 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -1922,6 +2049,18 @@ Observations
 </td>
 <td style="text-align:center;">
 32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
 </td>
 <td style="text-align:center;">
 </td>
@@ -1977,7 +2116,7 @@ Models Using mtcars
 </tr>
 </thead>
 <tbody>
-<tr grouplength="9">
+<tr grouplength="10">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -2098,7 +2237,21 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -2155,6 +2308,18 @@ Observations
 </td>
 <td style="text-align:center;">
 32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
 </td>
 <td style="text-align:center;">
 </td>
@@ -2222,7 +2387,7 @@ Column 4
 </tr>
 </thead>
 <tbody>
-<tr grouplength="9">
+<tr grouplength="10">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel A: MPG
 </td>
@@ -2343,7 +2508,21 @@ Observations
 32
 </td>
 </tr>
-<tr grouplength="5">
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+41.422
+</td>
+<td style="text-align:center;">
+31.141
+</td>
+<td style="text-align:center;">
+36.839
+</td>
+</tr>
+<tr grouplength="6">
 <td colspan="4" style="border-bottom: 1px solid;">
 Panel B: Displacement
 </td>
@@ -2400,6 +2579,18 @@ Observations
 </td>
 <td style="text-align:center;">
 32
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+F-stat
+</td>
+<td style="text-align:center;">
+65.561
 </td>
 <td style="text-align:center;">
 </td>

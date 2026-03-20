@@ -273,7 +273,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -284,7 +284,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -592,17 +592,21 @@ the <code>mtcars</code> data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## estimating two models for mpg</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>mpg_1 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="fu">feols</span>(mpg <span class="sc">~</span>  cyl <span class="sc">|</span> gear <span class="sc">+</span> carb, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="fu">feols</span>(mpg <span class="sc">~</span>  cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="do">## estimating the same two models for disp</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>disp_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: 0/2 fixed-effect singletons were removed (2 observations).</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>mpg_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="fu">feols</span>(mpg <span class="sc">~</span>  cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: 0/2/0 fixed-effect singletons were removed (2 observations).</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="do">## estimating the same two models for disp</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>disp_1 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: 0/2 fixed-effect singletons were removed (2 observations).</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>disp_2 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="fu">feols</span>(disp <span class="sc">~</span> cyl <span class="sc">|</span> gear <span class="sc">+</span> carb <span class="sc">+</span> am, <span class="at">cluster =</span> <span class="sc">~</span>hp)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: 0/2/0 fixed-effect singletons were removed (2 observations).</span></span></code></pre></div>
 <p>To create a regression table with two panels (Panel A: MPG/Panel B:
 Displacement) and two models in each, the lists
 <code>list(mpg_1, mpg_2)</code> and <code>list(disp_1, disp_2)</code>
@@ -653,10 +657,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(0.789)
+(0.764)
 </td>
 <td style="text-align:center;">
-(0.801)
+(0.775)
 </td>
 </tr>
 <tr>
@@ -664,10 +668,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 </tr>
 <tr>
@@ -675,10 +679,10 @@ Mean of Dependent Variable
 Num.Obs.
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr>
@@ -686,10 +690,10 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.818
+0.813
 </td>
 <td style="text-align:center;">
-0.835
+0.831
 </td>
 </tr>
 <tr>
@@ -697,10 +701,10 @@ R2
 R2 Adj.
 </td>
 <td style="text-align:center;">
-0.755
+0.765
 </td>
 <td style="text-align:center;">
-0.768
+0.777
 </td>
 </tr>
 <tr>
@@ -730,10 +734,10 @@ R2 Within Adj.
 AIC
 </td>
 <td style="text-align:center;">
-168.3
+156.8
 </td>
 <td style="text-align:center;">
-167.1
+155.8
 </td>
 </tr>
 <tr>
@@ -741,10 +745,10 @@ AIC
 BIC
 </td>
 <td style="text-align:center;">
-181.4
+166.6
 </td>
 <td style="text-align:center;">
-181.8
+167.0
 </td>
 </tr>
 <tr>
@@ -752,10 +756,10 @@ BIC
 RMSE
 </td>
 <td style="text-align:center;">
-2.53
+2.61
 </td>
 <td style="text-align:center;">
-2.41
+2.49
 </td>
 </tr>
 <tr>
@@ -821,10 +825,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(13.075)
+(12.660)
 </td>
 <td style="text-align:center;">
-(13.489)
+(13.061)
 </td>
 </tr>
 <tr>
@@ -832,10 +836,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 </tr>
 <tr>
@@ -843,10 +847,10 @@ Mean of Dependent Variable
 Num.Obs.
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr>
@@ -854,10 +858,10 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.909
+0.907
 </td>
 <td style="text-align:center;">
-0.910
+0.907
 </td>
 </tr>
 <tr>
@@ -865,10 +869,10 @@ R2
 R2 Adj.
 </td>
 <td style="text-align:center;">
-0.878
+0.882
 </td>
 <td style="text-align:center;">
-0.873
+0.878
 </td>
 </tr>
 <tr>
@@ -898,10 +902,10 @@ R2 Within Adj.
 AIC
 </td>
 <td style="text-align:center;">
-339.5
+317.3
 </td>
 <td style="text-align:center;">
-341.4
+319.2
 </td>
 </tr>
 <tr>
@@ -909,10 +913,10 @@ AIC
 BIC
 </td>
 <td style="text-align:center;">
-352.7
+327.2
 </td>
 <td style="text-align:center;">
-356.0
+330.4
 </td>
 </tr>
 <tr>
@@ -920,10 +924,10 @@ BIC
 RMSE
 </td>
 <td style="text-align:center;">
-36.76
+37.97
 </td>
 <td style="text-align:center;">
-36.68
+37.88
 </td>
 </tr>
 <tr>
@@ -979,11 +983,10 @@ setting. If you would like to change where the mean is placed, you will
 need to customize using the <code>panelsummary::panelsummary_raw</code>
 function (see the <a href="https://michaeltopper1.github.io/panelsummary/articles/adding_rows.html">Adding
 Rows to a panelsummary Table</a> vignette for more details). Now, using
-<code>gof_map</code> (see the <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html#gof_map">modelsummary
-website</a>) the goodness-of-fit statistics will be mapped/renamed.
-<strong>Note that the mean of the dependent variable is not included in
-the mapped statistics and cannot be reordered without using
-panelsummary::panelsummary_raw.</strong></p>
+<code>gof_map</code>, the goodness-of-fit statistics will be
+mapped/renamed. <strong>Note that the mean of the dependent variable is
+not included in the mapped statistics and cannot be reordered without
+using panelsummary::panelsummary_raw.</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">## creating a renaming tibble to pass into panelsummary </span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>gm <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>        <span class="sc">~</span>raw,      <span class="sc">~</span>clean,          <span class="sc">~</span>fmt,  <span class="sc">~</span>omit,</span>
@@ -1037,10 +1040,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(0.789)
+(0.764)
 </td>
 <td style="text-align:center;">
-(0.801)
+(0.775)
 </td>
 </tr>
 <tr>
@@ -1048,10 +1051,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 </tr>
 <tr>
@@ -1059,10 +1062,10 @@ Mean of Dependent Variable
 Observations
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr>
@@ -1117,10 +1120,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(13.075)
+(12.660)
 </td>
 <td style="text-align:center;">
-(13.489)
+(13.061)
 </td>
 </tr>
 <tr>
@@ -1128,10 +1131,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 </tr>
 <tr>
@@ -1139,10 +1142,10 @@ Mean of Dependent Variable
 Observations
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr>
@@ -1243,10 +1246,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(0.789)
+(0.764)
 </td>
 <td style="text-align:center;">
-(0.801)
+(0.775)
 </td>
 </tr>
 <tr>
@@ -1254,10 +1257,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 <td style="text-align:center;">
-20.091
+20.273
 </td>
 </tr>
 <tr>
@@ -1265,10 +1268,10 @@ Mean of Dependent Variable
 Observations
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr grouplength="4">
@@ -1291,10 +1294,10 @@ cyl
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:center;">
-(13.075)
+(12.660)
 </td>
 <td style="text-align:center;">
-(13.489)
+(13.061)
 </td>
 </tr>
 <tr>
@@ -1302,10 +1305,10 @@ cyl
 Mean of Dependent Variable
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 <td style="text-align:center;">
-230.722
+231.237
 </td>
 </tr>
 <tr>
@@ -1313,10 +1316,10 @@ Mean of Dependent Variable
 Observations
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 <td style="text-align:center;">
-32
+30
 </td>
 </tr>
 <tr>
